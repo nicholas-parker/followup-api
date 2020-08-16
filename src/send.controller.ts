@@ -46,9 +46,7 @@ export class SendController {
     if (event.businessAction === undefined) {
       err = 'businessAction is undefined. ';
     }
-    if (event.campaignEngagementId === undefined) {
-      err = err + 'campaignEngagementId is undefined. '; 
-    }
+    // campaignEngagementId is optional
     if (event.campaignId === undefined) {
       err = err + 'campaignId is undefined. '; 
     }
@@ -62,6 +60,7 @@ export class SendController {
       err = err + 'tribeId is undefined. '; 
     }
     if (err.length > 0) {
+      console.log('ERROR: ' + err);
       throw new BadRequestException(err);
     }
 
@@ -110,6 +109,7 @@ export class SendController {
       err = err + 'tribeId is undefined. '; 
     }
     if (err.length > 0) {
+      console.log('ERROR: ' + err);
       throw new BadRequestException(err);
     }
 
@@ -118,7 +118,7 @@ export class SendController {
 
       await this.sendService.send(event);
       console.log('Invitation sent to outbound-comms-api');
-      
+
     } catch(err) {
 
       console.log(err);
