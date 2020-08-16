@@ -20,7 +20,7 @@ export class SendController {
    * @param body 
    */
   @Post('pubsub')
-  public sendPUBSUB(@Body() pubsubmsg) {
+  public async sendPUBSUB(@Body() pubsubmsg) {
 
     // deserialise
     let event: SendMessage;
@@ -66,7 +66,18 @@ export class SendController {
     }
 
     // do the work
-    this.sendService.send(event);
+    // do the work
+    try {
+
+      await this.sendService.send(event);
+      console.log('Invitation sent to outbound-comms-api');
+
+    } catch(err) {
+
+     console.log(err);
+     throw new InternalServerErrorException(err);
+
+    }
   }
 
   /**
@@ -106,7 +117,8 @@ export class SendController {
     try {
 
       await this.sendService.send(event);
-
+      console.log('Invitation sent to outbound-comms-api');
+      
     } catch(err) {
 
       console.log(err);
